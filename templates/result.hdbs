@@ -1,0 +1,52 @@
+<div>
+  <table>
+  	<tr class="current_agent">
+  		<td id="d_groups"></td>
+      <td id="d_agents"></td>
+  	</tr>
+    <tr class="submit_section_nb">
+      <td class="th_left">
+      	<div>
+      		<table>
+      			<tr>	
+					     <td><button class="btn btn-default" type="submit" id="button_via">Via</button></td>
+      			</tr>
+      			<tr id="ticket_via" style="display: none;">
+      				<td>
+      					<ul>
+      						<li><input type="checkbox" name="ticket_via" value="email">&nbsp;Email</li>
+      						<li><input type="checkbox" name="ticket_via" value="chat">&nbsp;Chat</li>
+      						<li><input type="checkbox" name="ticket_via" value="voice">&nbsp;Voice</li>
+      						<li><input type="checkbox" name="ticket_via" value="social_media">&nbsp;Social Media</li>
+      						<li><input type="checkbox" name="ticket_via" value="good_rating">&nbsp;Good Rating</li>
+      						<li><input type="checkbox" name="ticket_via" value="bad_rating">&nbsp;Bad Rating</li>
+      						<li><input type="checkbox" name="ticket_via" value="good_rating_c">&nbsp;Good Rating (c)</li>
+      						<li><input type="checkbox" name="ticket_via" value="bad_rating_c">&nbsp;Bad Rating (c)</li>
+      					</ul>
+      				</td>
+      			</tr>
+            <tr>
+              <td>
+                <select id="filter_date" class="btn-default">
+                  <option value="thirty_days">Last 30 days</option>
+                  <option value="seven_days">Last 7 days</option>
+                  <option value="twentyfour_hours">Last 24 hours</option>
+                  <option value="custom">Custom</option>
+                </select>
+              </td>
+            </tr>
+            <tr id="ticket_date" style="display: none;">
+              <td><b>From</b><br><input type="text" id="datepicker_from" class="dp_filter"><br><b>To</b><br><input type="text" id="datepicker_to" class="dp_filter"><br><button class="btn btn-default" type="submit" id="button_via">Via</button></td>
+            </tr>
+      			<tr><td class="table_result_headers">Pending review by agent</td></tr>
+      			<tr><td>364&nbsp;987&nbsp;654&nbsp;312&nbsp;654</td></tr>
+      			<tr><td class="table_result_headers">Reviewed by agent</td></tr>
+      			
+      			<tr><td>300&nbsp;785&nbsp;210&nbsp;98&nbsp;12</td></tr>	
+      		</table>
+      	</div>	
+      </td>
+      <td class="th_right" id="tickets"></td>
+    </tr>
+  </table>
+</div>

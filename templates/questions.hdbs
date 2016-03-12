@@ -1,0 +1,75 @@
+<div>
+  <table>
+    <tr class= "title_ticket">
+      <th class="title_content">Greeting</th>
+      <td class="title_content">Y</td>
+      <td class="title_content">N</td>
+      <td class="title_content">n/a</td>
+    </tr>
+    <tr>
+      <th>Mentioned the company name</th>
+      <td><input type="radio" id="coach_question_1" name="coach_co_name" value="qua_co_name_yes"></td>
+      <td><input type="radio" id="coach_question_2" name="coach_co_name" value="qua_co_name_no"></td>
+      <td><input type="radio" id="coach_question_3" name="coach_co_name" value="qua_co_name_na"></td>
+    </tr>
+    <tr>
+      <th>Asked for the caller’s name</th>
+      <td><input type="radio" id="coach_question_4" name="coach_ca_name" value="qua_ca_name_yes"></td>
+      <td><input type="radio" id="coach_question_5" name="coach_ca_name" value="qua_ca_name_no"></td>
+      <td><input type="radio" id="coach_question_6" name="coach_ca_name" value="qua_ca_name_na"></td>
+    </tr>
+
+    <tr>
+      <th>The agent thanked the customer for calling</th>
+      <td><input type="radio" id="coach_question_7" name="coach_th_customer" value="qua_th_customer_yes"></td>
+      <td><input type="radio" id="coach_question_8" name="coach_th_customer" value="qua_th_customer_no"></td>
+      <td><input type="radio" id="coach_question_9" name="coach_th_customer" value="qua_th_customer_na"></td>
+    </tr>
+
+
+    
+    <tr class= "title_ticket">
+      <th class="title_content">Problem Solving Abilities</th>
+      <td class="title_content">Y</td>
+      <td class="title_content">N</td>
+      <td class="title_content">n/a</td>
+    </tr>
+
+
+    <tr>
+      <th>Provided the most appropriate solution</th>
+      <td><input type="radio" id="coach_question_10" name="coach_sol" value="qua_sol_yes"></td>
+      <td><input type="radio" id="coach_question_11" name="coach_sol" value="qua_sol_no"></td>
+      <td><input type="radio" id="coach_question_12" name="coach_sol" value="qua_sol_na"></td>
+    </tr>
+
+    <tr>
+      <th>The issue was sufficiently addressed</th>
+      <td><input type="radio" id="coach_question_13" name="coach_addressed" value="qua_is_addressed_yes"></td>
+      <td><input type="radio" id="coach_question_14" name="coach_addressed" value="qua_is_addressed_no"></td>
+      <td><input type="radio" id="coach_question_15" name="coach_addressed" value="qua_is_addressed_na"></td>
+    </tr>
+
+    <tr>
+      <th>The agent provided a reference number to the customer after resolving their issue</th>
+      <td><input type="radio" id="coach_question_16" name="coach_ref_number" value="qua_ref_number_yes"></td>
+      <td><input type="radio" id="coach_question_17" name="coach_ref_number" value="qua_ref_number_no"></td>
+      <td><input type="radio" id="coach_question_18" name="coach_ref_number" value="qua_ref_number_na"></td>
+    </tr>
+    
+    <tr>
+      <td colspan="4" style="text-align:right;height:15px"><h5 class="uncheck_all" id="uncheck_all">uncheck all</h5></td>
+    </tr>
+
+    <tr class="submit_section">
+      <th style="text-align:right">Mark as reviewed <input type="checkbox" name="reviewed" id="reviewed" value="yes"></th>
+      <td colspan="4"><input type="submit" value="Submit" class="submit_button" id="save_form"></td>
+    </tr>
+  </table>
+</div>
+
+
+
+
+
+

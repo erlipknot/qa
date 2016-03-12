@@ -1,0 +1,207 @@
+table {
+  width: 100%;
+}
+tr {
+  height: 35px;
+}
+
+th {
+  
+  padding: 10px 5px;
+  text-align: left;
+  font-weight: normal;
+}
+
+td{
+  padding: 10px 5px;
+}
+
+
+
+
+
+/********************/
+/*NAV_BAR*/
+/********************/
+
+
+
+
+
+
+.btn-default{
+  width: 100%;
+}
+
+.table_result_headers{
+  border-bottom: 2px solid black;
+  font-weight: bold;
+
+  padding: 10px;
+  color: #000000;
+}
+
+.table_result_title{
+  /*background-color: #f2f2f2;*/
+  padding: 5px;
+}
+
+.th_left {
+  width:20%;
+  text-align: left;
+  font-weight: normal;
+  padding: 10px 20px;
+}
+
+.th_right {
+  width:80%;
+  /*padding: 10px 5px;*/
+  text-align: left;
+  font-weight: normal;
+  /*background-color: #f2f2f2;*/
+  padding: 10px 20px;
+}
+
+
+.title {
+  /*background-color: #78A300;*/
+  margin-bottom: 10px;
+}
+
+.title_content{
+  padding: 10px 5px;
+  color: white;
+}
+
+.colored:nth-child(2n) {
+  background-color: #F7F7F7;
+}
+
+.colored:nth-child(2n+1) {
+  background-color: #FFFFFF;
+}
+
+.submit_section_nb{
+  /*background-color: #CFCFCF;*/
+  padding: 5px;
+}
+
+/*.filter_menu{
+  padding:0px; 
+  margin:0px;
+}*/
+
+.filter_menu_title{
+  height: 10px;
+}
+
+.current_agent{
+    /*background-color: #CFCFCF;*/
+  font-size: 18px;
+  text-align: left;
+  height: 45px;
+  border-bottom: 1px solid #CFCFCF;
+}
+
+.submit_button{
+  /*background-color: #ffa100;*/
+}
+
+.btn_user_name{
+  display: block;
+  height: 30px;
+  width: 250px !important;
+  text-align: center;
+  background-color: #a0be4c;
+  color: white;
+}
+
+
+
+
+
+
+
+
+/********************/
+/* TICKET SIDE_BAR */
+/********************/
+
+
+
+
+
+.title_ticket {
+  background-color: #78A300;
+  margin-bottom: 10px;
+}
+
+.submit_section{
+  background-color: #f2f2f2;
+  padding: 5px;
+}
+.submit_button{
+  background-color: #ffa100;
+}
+
+.uncheck_all{
+  font-size: 9px;
+  font-style: italic;
+  color: blue;
+}
+
+.uncheck_all:hover {
+  cursor: pointer;
+}
+
+/*tr {
+  height: 35px;
+}
+
+th {
+  width: 85%;
+  padding: 10px 5px;
+  text-align: left;
+  font-weight: normal;
+}
+
+td{
+  text-align: center;
+  padding: 10px 5px;
+}
+
+.title {
+  background-color: #78A300;
+  margin-bottom: 10px;
+}
+
+.title_content{
+  padding: 10px 5px;
+  color: white;
+}
+
+.colored:nth-child(2n) {
+  background-color: #999;
+}
+
+.colored:nth-child(2n+1) {
+  background-color: #956D22;
+}
+
+.submit_section{
+  background-color: #f2f2f2;
+  padding: 5px;
+}
+.submit_button{
+  background-color: #ffa100;
+}
+
+.uncheck_all{
+  font-size: 9px;
+  font-style: italic;
+  color: blue;
+}
+
+.uncheck_all:hover {
+  cursor: pointer;
+}*/
