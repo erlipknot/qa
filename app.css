@@ -99,8 +99,9 @@ td{
     /*background-color: #CFCFCF;*/
   font-size: 18px;
   text-align: left;
-  height: 45px;
+  height: 60px;
   border-bottom: 1px solid #CFCFCF;
+  padding:10px 0px 10px 0px;
 }
 
 .submit_button{
@@ -116,6 +117,16 @@ td{
   color: white;
 }
 
+.no_user{
+  font-size: 24px;
+  text-align: center;
+  padding: 100px 0px 100px 0px;
+}
+
+.dp_filter{
+  margin:10px 0px 10px 0px;
+  width:100%;
+}
 
 
 

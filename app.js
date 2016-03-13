@@ -247,7 +247,7 @@
 
                     _.each(via_mail, function(data_mail,k){
                         if(cont < total_result){
-                          table_tickets += "<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data_mail.id + "'>" + data_mail.id + "</a></td><td>" + data_mail.created_at + "</td><td>" + data_mail.subject + "</td><td>" + data_mail.status + "</td></tr>";
+                          table_tickets += "<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data_mail.id + "'>" + data_mail.id + "</a></td><td>" + moment(data_mail.created_at).format('DD-MM-YYYY') + "</td><td>" + data_mail.subject + "</td><td>" + data_mail.status + "</td></tr>";
                           cont++;
                         }
                     });
@@ -259,7 +259,7 @@
 
                     _.each(via_chat, function(data_chat,k){
                         if(cont < total_result){
-                          table_tickets += "<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data_chat.id + "'>" + data_chat.id + "</a></td><td>" + data_chat.created_at + "</td><td>" + data_chat.subject + "</td><td>" + data_chat.status + "</td></tr>";
+                          table_tickets += "<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data_chat.id + "'>" + data_chat.id + "</a></td><td>" + moment(data_chat.created_at).format('DD-MM-YYYY') + "</td><td>" + data_chat.subject + "</td><td>" + data_chat.status + "</td></tr>";
                         }            
                     });
                   }
@@ -275,7 +275,7 @@
                             var v_comment = "<span style='color:red'>c</span>";
 
                           }
-                          table_tickets += "<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data_good.id + "'>" + data_good.id + " " + v_comment + "</a></td><td>" + data_good.created_at + "</td><td>" + data_good.subject + "</td><td>" + data_good.status + "</td></tr>";
+                          table_tickets += "<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data_good.id + "'>" + data_good.id + " " + v_comment + "</a></td><td>" + moment(data_good.created_at).format('DD-MM-YYYY') + "</td><td>" + data_good.subject + "</td><td>" + data_good.status + "</td></tr>";
                         }            
                     });
                   }
@@ -286,7 +286,7 @@
 
                     _.each(sat_bad, function(data_bad,k){
                         if(cont < total_result){
-                          table_tickets += "<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data_bad.id + "'>" + data_bad.id + "</a></td><td>" + data_bad.created_at + "</td><td>" + data_bad.subject + "</td><td>" + data_bad.status + "</td></tr>";
+                          table_tickets += "<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data_bad.id + "'>" + data_bad.id + "</a></td><td>" + moment(data_bad.created_at).format('DD-MM-YYYY') + "</td><td>" + data_bad.subject + "</td><td>" + data_bad.status + "</td></tr>";
                         }            
                     });
                   }
@@ -299,6 +299,8 @@
 
                 table_tickets += "</table></div>";
 
+                this.$(".no_user").hide();
+                this.$(".submit_section_nb").toggle();
                 this.$("#tickets").html(table_tickets);
                 
 

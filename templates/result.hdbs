@@ -1,10 +1,10 @@
 <div>
   <table>
-  	<tr class="current_agent">
+    <tr class="current_agent">
   		<td id="d_groups"></td>
       <td id="d_agents"></td>
   	</tr>
-    <tr class="submit_section_nb">
+    <tr class="submit_section_nb" style="display: none;">
       <td class="th_left">
       	<div>
       		<table>
@@ -36,7 +36,7 @@
               </td>
             </tr>
             <tr id="ticket_date" style="display: none;">
-              <td><b>From</b><br><input type="text" id="datepicker_from" class="dp_filter"><br><b>To</b><br><input type="text" id="datepicker_to" class="dp_filter"><br><button class="btn btn-default" type="submit" id="button_via">Via</button></td>
+              <td><b>From</b><br><input type="text" id="datepicker_from" class="dp_filter"><br><b>To</b><br><input type="text" id="datepicker_to" class="dp_filter"><br></td>
             </tr>
       			<tr><td class="table_result_headers">Pending review by agent</td></tr>
       			<tr><td>364&nbsp;987&nbsp;654&nbsp;312&nbsp;654</td></tr>
