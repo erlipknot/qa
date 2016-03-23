@@ -9,5 +9,21 @@
   "private": true,
   "location": ["ticket_sidebar", "top_bar", "nav_bar"],
   "version": "1.0",
-  "frameworkVersion": "1.0"
+  "frameworkVersion": "1.0",
+
+  "parameters": [
+    {
+      "name": "default_channels",
+      "type": "text",
+      "required": false,
+      "default": "{\"settings\":{\"channels\":[\"mail\",\"chat\",\"voice\",\"api\"]}}"
+    },
+    {
+      "name": "tickets_by_channel",
+      "type": "number",
+      "required": false,
+      "default": "3"
+    }
+  ]
+
 }

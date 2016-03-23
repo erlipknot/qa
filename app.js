@@ -78,9 +78,21 @@
         };
       },
 
-      getTicketsByChannel: function(data, via){
+      getTicketsByChannel: function(data, via, created_on){
+
+        //console.log('/api/v2/search.json?query=type:ticket assignee:"' + data + '" ' + created_on + ' via:"' + via + '"');
         return{
-          url:'/api/v2/search.json?query=type:ticket assignee:"' + data + '" created>2015-01-01 created<2015-12-31 via:"' + via + '"',
+          url:'/api/v2/search.json?query=type:ticket assignee:"' + data + '"' + created_on + ' via:"' + via + '"',
+          type: 'GET',
+          dataType: 'json'
+        };
+      },
+
+      getPendingReviews: function(data){
+
+        //console.log('/api/v2/search.json?query=type:ticket assignee:' + data  + ' tags:agent_review');
+        return{
+          url:'/api/v2/search.json?query=type:ticket assignee:' + data  + ' tags:agent_review',
           type: 'GET',
           dataType: 'json'
         };
@@ -93,8 +105,6 @@
           dataType: 'json'
         };
       }
-    
-
     },
 
 
@@ -112,13 +122,17 @@
       'change #agents':'agent_info',
       'focus #datepicker_from':'showCalendar',
       'focus #datepicker_to':'showCalendar',
+      'change #datepicker_to':'showByDate',
       'click #button_via': 'showChannels',
-      'change #filter_date':'showDates'
+      'change #filter_date':'showDates',
+      'change #ticket_via':'applyFilterVia'
     },
 
     loadData: function() {
 
-    	if(this.currentLocation() == 'ticket_sidebar'){
+      if(this.currentLocation() == 'ticket_sidebar'){
+
+          console.log(this.ticket().tags());
 
       		this.ajax('reviewedTicket', this.ticket().id()).done(function(data){
 
@@ -126,14 +140,14 @@
 
             this.ajax('getTags', this.ticket().id()).done(function(data){
 
-              for(var i = 1; i <= 18; i++){
+              for(var i = 1; i <= 21; i++){
                 
                 for(var j = 0; j <= data.tags.length; j++){
                   
                   if(this.$("#coach_question_" + i).attr("value") == data.tags[j]){
 
                     this.$("#coach_question_" + i).prop('checked', true);
-
+                    
                   }
                 
                 }  
@@ -160,17 +174,41 @@
           _.each(groups, function(data,k){
             drop_groups += "<option value='" + data.name + "'>" + data.name + "</option>";
           });
-
-          this.switchTo('result');
+          var data = JSON.parse(this.setting('default_channels'));
+          this.switchTo('result',{settings: data.settings});
           this.$("#d_groups").html(drop_groups + "</select>");
 
         });
 
-    	}else{
+    	} else {
 
-        console.log("Top Bar");
+        /*var v_subdomain = this.currentAccount().subdomain();
+        var currentUser = this.currentUser();
+        var pending_review = this.ajax('getPendingReviews', currentUser.id());
+
+        this.switchTo('agent_review');
+        this.popover('show');
+        this.popover('hide');
+
+        this.when(pending_review).then(function(data){
+
+          var p_review = data.results;
+
+                 
+          _.each(p_review, function(data){
+
+            console.log("<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data.id + "'>" + data.id + "</a></td><td>" + moment(data.created_at).format('DD-MM-YYYY') + "</td><td>" + data.subject + "</td><td>" + data.status + "</td></tr>");
+            this.$("#agent_pending_reviews").append("<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data.id + "'>" + data.id + "</a></td><td>" + data.subject + "</td><td>" + data.status + "</td></tr>");
+
+          });
+
+        });*/
+
+        console.log(currentUser.role());
 
       }
+
+      console.log(this.currentLocation());
     },
 
       /*********************/
@@ -211,108 +249,69 @@
           this.$("#" + dt_name).datepicker();
       },
 
+      
       agent_info: function(event_name){
 
-        //!!FIX AND OPTIMIZE THE SEARCH PART
-
-        var tickets_via_mail = this.ajax('getTicketsByChannel',event_name.currentTarget.value, "mail");
-        var tickets_via_chat = this.ajax('getTicketsByChannel',event_name.currentTarget.value, "chat");
-        var tickets_sat_good = this.ajax('getTicketsBySatisfaction',event_name.currentTarget.value, "good");
-        var tickets_sat_bad = this.ajax('getTicketsBySatisfaction',event_name.currentTarget.value, "bad");
         var v_subdomain = this.currentAccount().subdomain();
+        var b = JSON.parse(this.setting('default_channels'));
+        var total_channels = b.settings.channels.length;
+        var channels_data = b.settings.channels;
 
+        for(var i = 0; i < total_channels; i++){
 
-        //this.when(tickets_via_mail).then(function(data_mail){
-        this.when(tickets_via_mail).then(function(data_mail){
-          this.when(tickets_via_chat).then(function(data_chat){
-            this.when(tickets_sat_good).then(function(data_good){
-              this.when(tickets_sat_bad).then(function(data_bad){
+          var current_channel = channels_data[i];
+          var tickets_by_channel = this.ajax('getTicketsByChannel',event_name.currentTarget.value, current_channel,"created>" + moment().subtract(90, 'days').format("YYYY-MM-DD") + " created<" + moment().format("YYYY-MM-DD"));
 
-                var table_tickets;//Var containing the result of the search and will display the table
-                var via_mail = data_mail.results;//Total of tickets via email
-                var via_chat = data_chat.results;//Total of tickets via chat
-                var sat_good = data_good.results;//Total of tickets good rating
-                var sat_bad = data_bad.results;//Total of tickets bad rating
+          this.when(tickets_by_channel).then(function(data_mail){
 
-                var total_result = 3;//Total of results to show
-                var cont = 0;
+            var via_mail = data_mail.results;
+            
+            if(data_mail.count > 0){
+              //If exists, check the checkbox (Channel/Via)
+              this.$('#channel_' + via_mail[0].via.channel)[0].checked = true;
+              //If exists, create the table with the channel as ID
+              this.$(".th_right").append("<div id='results_by_channel_" + via_mail[0].via.channel + "'><table width='100%' id='tickets_by_channel_" + via_mail[0].via.channel + "'></table></div>");
 
-                table_tickets = "<div><table>";
+              this.$("#tickets_by_channel_" + via_mail[0].via.channel).append("<tr><th colspan='4' class='table_result_headers'>" + via_mail[0].via.channel + "</th></tr><tr class='table_result_title'><td>Ticket Id</td><td>Created at</td><td>Subject</td><td>Status</td></tr>");
 
-                if(via_mail.length > 0 || via_chat.length > 0 || sat_good.length > 0 || sat_bad.length > 0){
+              _.each(via_mail.slice(0,this.setting('tickets_by_channel')), function(data_mail){
 
-                  if(via_mail.length > 0){
-
-                    table_tickets +="<tr><th colspan='4' class='table_result_headers'>Email</th></tr><tr class='table_result_title'><td>Ticket Id</td><td>Created at</td><td>Subject</td><td>Status</td></tr>";
-
-                    _.each(via_mail, function(data_mail,k){
-                        if(cont < total_result){
-                          table_tickets += "<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data_mail.id + "'>" + data_mail.id + "</a></td><td>" + moment(data_mail.created_at).format('DD-MM-YYYY') + "</td><td>" + data_mail.subject + "</td><td>" + data_mail.status + "</td></tr>";
-                          cont++;
-                        }
-                    });
-                  }
-
-                  if(via_chat.length > 0){
-                    cont = 0;
-                    table_tickets +="<tr><th colspan='4' class='table_result_headers'>Chat</th></tr><tr class='table_result_title'><td>Ticket Id</td><td>Created at</td><td>Subject</td><td>Status</td></tr>";
-
-                    _.each(via_chat, function(data_chat,k){
-                        if(cont < total_result){
-                          table_tickets += "<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data_chat.id + "'>" + data_chat.id + "</a></td><td>" + moment(data_chat.created_at).format('DD-MM-YYYY') + "</td><td>" + data_chat.subject + "</td><td>" + data_chat.status + "</td></tr>";
-                        }            
-                    });
-                  }
-
-                  if(sat_good.length > 0){
-                    cont = 0;
-                    table_tickets +="<tr><th colspan='4' class='table_result_headers'>Good Satisfaction</th></tr><tr class='table_result_title'><td>Ticket Id</td><td>Created at</td><td>Subject</td><td>Status</td></tr>";
-
-                    _.each(sat_good, function(data_good,k){
-                        if(cont < total_result){
-                          if(data_good.satisfaction_rating.comment != ""){
-
-                            var v_comment = "<span style='color:red'>c</span>";
-
-                          }
-                          table_tickets += "<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data_good.id + "'>" + data_good.id + " " + v_comment + "</a></td><td>" + moment(data_good.created_at).format('DD-MM-YYYY') + "</td><td>" + data_good.subject + "</td><td>" + data_good.status + "</td></tr>";
-                        }            
-                    });
-                  }
-
-                  if(sat_bad.length > 0){
-                    cont = 0;
-                    table_tickets +="<tr><th colspan='4' class='table_result_headers'>Bad Satisfaction</th></tr><tr class='table_result_title'><td>Ticket Id</td><td>Created at</td><td>Subject</td><td>Status</td></tr>";
-
-                    _.each(sat_bad, function(data_bad,k){
-                        if(cont < total_result){
-                          table_tickets += "<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data_bad.id + "'>" + data_bad.id + "</a></td><td>" + moment(data_bad.created_at).format('DD-MM-YYYY') + "</td><td>" + data_bad.subject + "</td><td>" + data_bad.status + "</td></tr>";
-                        }            
-                    });
-                  }
-
-                }else{
-
-                  table_tickets ="<tr><td colspan='3'>No results</td></tr>"; 
-
-                }
-
-                table_tickets += "</table></div>";
-
-                this.$(".no_user").hide();
-                this.$(".submit_section_nb").toggle();
-                this.$("#tickets").html(table_tickets);
-                
-
+                    this.$("#tickets_by_channel_" + data_mail.via.channel).append("<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data_mail.id + "'>" + data_mail.id + "</a></td><td>" + moment(data_mail.created_at).format('DD-MM-YYYY') + "</td><td>" + data_mail.subject + "</td><td>" + data_mail.status + "</td></tr>");
+              
               });
-            });
-          });
-        });
+
+            }
+    
+          });   
+
+        }
+
+        this.$(".submit_section_nb").toggle();
+
       },
+
+      showByDate:function(event_name){
+
+        console.log("Desde: " + moment(this.$("#datepicker_from").val()).format('DD-MM-YYYY') + " hasta " + moment(event_name.currentTarget.value).format('DD-MM-YYYY'));
+
+      }, 
 
       showChannels:function(){
 
-          this.$("#ticket_via").toggle();
+        this.$("#ticket_via").toggle();
+
+      },
+
+      applyFilterVia:function(event_name){
+
+        if(event_name.target.checked){
+          this.$("#results_by_" + event_name.target.id).toggle();
+        }else{
+          console.log(this.$("#results_by_" + event_name.target.id));
+          this.$("#results_by_" + event_name.target.id).css("display","none");
+        }
+        //console.log(event_name.target.id);
+        
 
       },
 
@@ -353,7 +352,16 @@
 
         }
 
-        v_tags += '"reviewed"]}';
+        if(this.$("#toAgent").prop('checked', true)){
+
+          v_tags += '"agent_review"]}';
+
+        }else{
+
+          v_tags += '"reviewed"]}';
+
+        }
+
 
         //IF WE FIND A QUALITY TAG REMOVE IT
 
@@ -379,7 +387,7 @@
 
         var v_tags = '{"tags":[';
 
-        for(var i = 1; i <= 18; i++){
+        for(var i = 1; i <= 21; i++){
           
           if(this.$("#coach_question_" + i).is(":checked")){
 
@@ -390,7 +398,15 @@
 
         }
 
-        v_tags += '"reviewed"]}';
+        if(this.$("#toAgent").prop('checked', true)){
+
+          v_tags += '"agent_review"]}';
+
+        }else{
+
+          v_tags += '"reviewed"]}';
+
+        }
 
         if(flag == 1){
 
@@ -424,7 +440,7 @@
 
         this.$("#reviewed").attr("disabled", false);
 
-        for(var i = 1; i <= 18; i++){
+        for(var i = 1; i <= 21; i++){
 
           if(this.$("#coach_question_" + i).is(":checked")){
 

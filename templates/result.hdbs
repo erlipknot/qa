@@ -14,14 +14,15 @@
       			<tr id="ticket_via" style="display: none;">
       				<td>
       					<ul>
-      						<li><input type="checkbox" name="ticket_via" value="email">&nbsp;Email</li>
-      						<li><input type="checkbox" name="ticket_via" value="chat">&nbsp;Chat</li>
-      						<li><input type="checkbox" name="ticket_via" value="voice">&nbsp;Voice</li>
-      						<li><input type="checkbox" name="ticket_via" value="social_media">&nbsp;Social Media</li>
-      						<li><input type="checkbox" name="ticket_via" value="good_rating">&nbsp;Good Rating</li>
-      						<li><input type="checkbox" name="ticket_via" value="bad_rating">&nbsp;Bad Rating</li>
-      						<li><input type="checkbox" name="ticket_via" value="good_rating_c">&nbsp;Good Rating (c)</li>
-      						<li><input type="checkbox" name="ticket_via" value="bad_rating_c">&nbsp;Bad Rating (c)</li>
+      						<li><input type="checkbox" name="ticket_via" value="mail" id="channel_email">&nbsp;Email</li>
+      						<li><input type="checkbox" name="ticket_via" value="chat" id="channel_chat">&nbsp;Chat</li>
+                  <li><input type="checkbox" name="ticket_via" value="api" id="channel_api">&nbsp;Api</li>
+      						<li><input type="checkbox" name="ticket_via" value="voice" id="channel_voice">&nbsp;Voice</li>
+      						<li><input type="checkbox" name="ticket_via" value="social_media" id="channel_social_media">&nbsp;Social Media</li>
+      						<li><input type="checkbox" name="ticket_via" value="good_rating" id="channel_good_rating">&nbsp;Good Rating</li>
+      						<li><input type="checkbox" name="ticket_via" value="bad_rating" id="channel_bad_rating">&nbsp;Bad Rating</li>
+      						<li><input type="checkbox" name="ticket_via" value="good_rating_c"  id="channel_good_rating_c">&nbsp;Good Rating (c)</li>
+      						<li><input type="checkbox" name="ticket_via" value="bad_rating_c" id="channel_bad_rating_c">&nbsp;Bad Rating (c)</li>
       					</ul>
       				</td>
       			</tr>

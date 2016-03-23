@@ -1,0 +1,7 @@
+<div>
+  <table id="agent_pending_reviews">
+    <tr class= "title_ticket">
+      <th class="title_content" colspan="3">Pending reviews</th>
+    </tr>
+  </table>
+</div>
