@@ -1,92 +1,117 @@
-<div>
-  <table>
-    <tr class= "title_ticket">
-      <th class="title_content">Greeting</th>
-      <td class="title_content">Y</td>
-      <td class="title_content">N</td>
-      <td class="title_content">n/a</td>
-    </tr>
-    <tr>
-      <th>Company / Agent name</th>
-      <td><input type="radio" id="coach_question_1" name="coach_aoc_name" value="qua_aoc_name_yes"></td>
-      <td><input type="radio" id="coach_question_2" name="coach_aoc_name" value="qua_aoc_name_no"></td>
-      <td><input type="radio" id="coach_question_3" name="coach_aoc_name" value="qua_aoc_name_na"></td>
-    </tr>
-    <tr>
-      <th>Communicated positive tone and maintaining professionalism</th>
-      <td><input type="radio" id="coach_question_4" name="coach_communication" value="qua_communication_yes"></td>
-      <td><input type="radio" id="coach_question_5" name="coach_communication" value="qua_communication_no"></td>
-      <td><input type="radio" id="coach_question_6" name="coach_communication" value="qua_communication_na"></td>
-    </tr>
+<div class="bs-example">
+    <ul class="nav nav-tabs" id="myTab">
+        <li id="greeting" class="active"><a href="#" name="greeting">Greeting</a></li>
+        <li id="security"><a href="#" name="security">Security</a></li>
+        <li id="resolution"><a href="#" name="resolution">Resolution</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="greeting_questions" class="tab-pane fade in active">
+            <table>
+              <tr class= "title_ticket">
+                <th width="85%"  class="title_content">&nbsp</th>
+                <td width="5%" class="title_content">Y</td>
+                <td width="5%" class="title_content">N</td>
+                <td width="5%" class="title_content">n/a</td>
+              </tr>
+              <tr>
+                <th>Company / Agent name</th>
+                <td><input type="radio" id="coach_question_1" name="coach_aoc_name" value="qua_aoc_name_yes"></td>
+                <td><input type="radio" id="coach_question_2" name="coach_aoc_name" value="qua_aoc_name_no"></td>
+                <td><input type="radio" id="coach_question_3" name="coach_aoc_name" value="qua_aoc_name_na"></td>
+              </tr>
+              <tr>
+                <!-- ORIGINAL <th>Communicated positive tone and maintaining professionalism</th>-->
+                <th>Communicated positive tone</th>
+                <td><input type="radio" id="coach_question_4" name="coach_communication" value="qua_communication_yes"></td>
+                <td><input type="radio" id="coach_question_5" name="coach_communication" value="qua_communication_no"></td>
+                <td><input type="radio" id="coach_question_6" name="coach_communication" value="qua_communication_na"></td>
+              </tr>
+          </table>
+        </div>
+        <div id="security_questions" class="tab-pane fade in">
+          <table>
+            <tr class= "title_ticket">
+              <th width="85%" class="title_content">&nbsp</th>
+              <td width="5%" class="title_content">Y</td>
+              <td width="5%" class="title_content">N</td>
+              <td width="5%" class="title_content">n/a</td>
+            </tr>
+            <tr>
+              <!--<th>Actions taken compromised the customer experience</th>-->
+              <th>Actions taken customer experience</th>
+              <td><input type="radio" id="coach_question_7" name="coach_sec" value="qua_sec_yes"></td>
+              <td><input type="radio" id="coach_question_8" name="coach_sec" value="qua_sec_no"></td>
+              <td><input type="radio" id="coach_question_9" name="coach_sec" value="qua_sec_na"></td>
+            </tr>
 
-    
-    <tr class= "title_ticket">
-      <th class="title_content">Security</th>
-      <td class="title_content">Y</td>
-      <td class="title_content">N</td>
-      <td class="title_content">n/a</td>
-    </tr>
+            <tr>
+              <!--<th>Actions taken on the account contrary to our procedures</th>-->
+              <th>Actions taken contrary procedures</th>
+              <td><input type="radio" id="coach_question_10" name="coach_pro" value="qua_pro_yes"></td>
+              <td><input type="radio" id="coach_question_11" name="coach_pro" value="qua_pro_no"></td>
+              <td><input type="radio" id="coach_question_12" name="coach_pro" value="qua_pro_na"></td>
+            </tr>
+          </table>
+        </div>
+        <div id="resolution_questions" class="tab-pane fade in">
+          <table>
+            <tr class= "title_ticket">
+              <th width="85%" class="title_content">&nbsp</th>
+              <td width="5%" class="title_content">Y</td>
+              <td width="5%" class="title_content">N</td>
+              <td width="5%" class="title_content">n/a</td>
+            </tr>
+            <tr>
+              <th>Issue was fully addressed</th>
+              <td><input type="radio" id="coach_question_13" name="coach_add" value="qua_add_yes"></td>
+              <td><input type="radio" id="coach_question_14" name="coach_add" value="qua_add_no"></td>
+              <td><input type="radio" id="coach_question_15" name="coach_add" value="qua_add_na"></td>
+            </tr>
 
+            <tr>
+              <th>Clear and structured response</th>
+              <td><input type="radio" id="coach_question_16" name="coach_str" value="qua_str_yes"></td>
+              <td><input type="radio" id="coach_question_17" name="coach_str" value="qua_str_no"></td>
+              <td><input type="radio" id="coach_question_18" name="coach_str" value="qua_str_na"></td>
+            </tr>
 
-    <tr>
-      <th>Actions taken compromised the customer experience</th>
-      <td><input type="radio" id="coach_question_7" name="coach_sec" value="qua_sec_yes"></td>
-      <td><input type="radio" id="coach_question_8" name="coach_sec" value="qua_sec_no"></td>
-      <td><input type="radio" id="coach_question_9" name="coach_sec" value="qua_sec_na"></td>
-    </tr>
+            <!--<tr>
+              <th>Anticipated future customer needs and additional information was provided</th>
+              <td><input type="radio" id="coach_question_19" name="coach_inf" value="qua_inf_yes"></td>
+              <td><input type="radio" id="coach_question_20" name="coach_inf" value="qua_inf_no"></td>
+              <td><input type="radio" id="coach_question_21" name="coach_inf" value="qua_inf_na"></td>
+            </tr>-->
+          </table>
+        </div>
+    </div>
 
-    <tr>
-      <th>Actions taken on the account contrary to our procedures</th>
-      <td><input type="radio" id="coach_question_10" name="coach_pro" value="qua_pro_yes"></td>
-      <td><input type="radio" id="coach_question_11" name="coach_pro" value="qua_pro_no"></td>
-      <td><input type="radio" id="coach_question_12" name="coach_pro" value="qua_pro_na"></td>
-    </tr>
+    <div>
+      <table>
+        <tr>
+          <td colspan="2" style="text-align:right;height:15px"><h5 class="uncheck_all" id="uncheck_all">uncheck all</h5></td>
+        </tr>
+        <tr class="submit_section">
+          <td colspan="2">Notes</td>
+        </tr>
+        <tr>
+          <td colspan="2"><textarea rows="4" cols="39">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum, justo id fringilla lacinia, nisi ex suscipit dolor, non porttitor eros velit ac neque. Fusce nec massa vitae magna ullamcorper blandit. Morbi et lacus quis eros vestibulum facilisis non et lacus. Nunc arcu lacus, laoreet ac tincidunt ut, faucibus et risus. Donec tempus lectus velit, ut maximus ex eleifend ac. Vivamus porta pellentesque viverra. Proin sit amet porta purus, ac consequat urna. In bibendum porta iaculis. Phasellus porttitor dignissim urna id dictum. Suspendisse laoreet neque nec felis porttitor, eget aliquet erat scelerisque. Duis pharetra semper feugiat. Morbi luctus lacus at semper scelerisque. Phasellus at consequat augue. Etiam tristique sem sed sem tincidunt, ut gravida tellus cursus. Cras ex neque, volutpat quis interdum sed, scelerisque sed velit.</textarea></td>
+        </tr>
+        <tr class="submit_section">
+          <td width="50%">Mark as reviewed <input type="checkbox" name="reviewed" id="reviewed" value="yes"></td>
+          <td width="50%">Send to agent <input type="checkbox" name="toAgent" id="toagent" value="yes"></td>
+        </tr>
+        <tr>
+          <td style="text-align:right" colspan="2"><input type="submit" value="Submit" class="submit_button" id="save_form"></td>
+        </tr>
+      </table>
+    </div>
 
-
-    <tr class= "title_ticket">
-      <th class="title_content">Resolution</th>
-      <td class="title_content">Y</td>
-      <td class="title_content">N</td>
-      <td class="title_content">n/a</td>
-    </tr>
-
-
-    <tr>
-      <th>Issue was fully addressed</th>
-      <td><input type="radio" id="coach_question_13" name="coach_add" value="qua_add_yes"></td>
-      <td><input type="radio" id="coach_question_14" name="coach_add" value="qua_add_no"></td>
-      <td><input type="radio" id="coach_question_15" name="coach_add" value="qua_add_na"></td>
-    </tr>
-
-    <tr>
-      <th>Clear and structured response</th>
-      <td><input type="radio" id="coach_question_16" name="coach_str" value="qua_str_yes"></td>
-      <td><input type="radio" id="coach_question_17" name="coach_str" value="qua_str_no"></td>
-      <td><input type="radio" id="coach_question_18" name="coach_str" value="qua_str_na"></td>
-    </tr>
-
-    <tr>
-      <th>Anticipated future customer needs and additional information was provided</th>
-      <td><input type="radio" id="coach_question_19" name="coach_inf" value="qua_inf_yes"></td>
-      <td><input type="radio" id="coach_question_20" name="coach_inf" value="qua_inf_no"></td>
-      <td><input type="radio" id="coach_question_21" name="coach_inf" value="qua_inf_na"></td>
-    </tr>
-
-
-    
-    <tr>
-      <td colspan="4" style="text-align:right;height:15px"><h5 class="uncheck_all" id="uncheck_all">uncheck all</h5></td>
-    </tr>
-
-    <tr class="submit_section">
-      <td width="50%">Mark as reviewed <input type="checkbox" name="reviewed" id="reviewed" value="yes"></td>
-      <td width="50%" colspan="3">Send to agent <input type="checkbox" name="toAgent" id="toagent" value="yes"></td>
-    </tr>
-    <tr class="submit_section">
-      <td style="text-align:right" colspan="4"><input type="submit" value="Submit" class="submit_button" id="save_form"></td>
-    </tr>
-  </table>
 </div>
+
+
+
+
+
 
 
 

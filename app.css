@@ -35,28 +35,33 @@ td{
 }
 
 .table_result_title{
-  /*background-color: #f2f2f2;*/
+  background-color: #D1D1D1;
   padding: 5px;
+  color:white;
 }
 
 .th_left {
   width:20%;
   text-align: left;
   font-weight: normal;
-  padding: 10px 20px;
+  padding: 10px 10px;
+}
+
+#groups, #d_agents{
+  width:100%;
 }
 
 .th_right {
-  width:80%;
-  /*padding: 10px 5px;*/
-  text-align: left;
-  font-weight: normal;
-  /*background-color: #f2f2f2;*/
+  width:15%;
   padding: 10px 20px;
+  /*text-align: left;
+  font-weight: normal;
+  padding: 10px 20px;
+  margin-left: 5px;
+  */
 }
 
 .title {
-  /*background-color: #78A300;*/
   margin-bottom: 10px;
 }
 
@@ -144,9 +149,6 @@ td{
   cursor: pointer;
 }
 
-.spinner {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  padding: 6px;
+.panel_title{
+  cursor: pointer; cursor: hand; 
 }

@@ -10,7 +10,7 @@
 
         return {
           
-          url: '/api/v2/search.json?query=' + id + ' tags:reviewed',
+          url: '/api/v2/search.json?query=' + id + ' tags:tl_reviewed',
           type: 'GET',
           dataType: 'json'
 
@@ -31,8 +31,6 @@
       },
 
       removeTags: function(arr_tag, id){
-
-        console.log(arr_tag);
 
         return {
 
@@ -80,9 +78,9 @@
 
       getTicketsByChannel: function(data, via, created_on){
 
-        //console.log('/api/v2/search.json?query=type:ticket assignee:"' + data + '" ' + created_on + ' via:"' + via + '"');
+        console.log('/api/v2/search.json?query=type:ticket assignee:"' + data + '" ' + created_on + ' via:"' + via + '" -tags:tl_reviewed');
         return{
-          url:'/api/v2/search.json?query=type:ticket assignee:"' + data + '"' + created_on + ' via:"' + via + '"',
+          url:'/api/v2/search.json?query=type:ticket assignee:"' + data + '"' + created_on + ' via:"' + via + '" -tags:tl_reviewed',
           type: 'GET',
           dataType: 'json'
         };
@@ -116,6 +114,11 @@
       'click #save_form':'getValues',
       'change input:radio':'hideReviewed',
       'click #uncheck_all':'uncheckAll',
+      'click #myTab a':'changeTabs',
+
+
+
+
 
       //DOM NAV_BAR
       'change #groups':'loadAgents',
@@ -128,11 +131,26 @@
       'change #ticket_via':'applyFilterVia'
     },
 
+    changeTabs: function(e) {
+
+        
+      e.preventDefault();
+
+      //Deactivate all the elements
+      this.$('.bs-example li').removeClass('active');
+      this.$('.bs-example div').removeClass('active');
+      //Activate all the elements
+      this.$('#' + e.currentTarget.name).addClass('active');
+      this.$('#' + e.currentTarget.name + '_questions').addClass('active');
+
+
+
+    },
+
+
     loadData: function() {
 
       if(this.currentLocation() == 'ticket_sidebar'){
-
-          console.log(this.ticket().tags());
 
       		this.ajax('reviewedTicket', this.ticket().id()).done(function(data){
 
@@ -182,7 +200,7 @@
 
     	} else {
 
-        /*var v_subdomain = this.currentAccount().subdomain();
+        var v_subdomain = this.currentAccount().subdomain();
         var currentUser = this.currentUser();
         var pending_review = this.ajax('getPendingReviews', currentUser.id());
 
@@ -197,18 +215,14 @@
                  
           _.each(p_review, function(data){
 
-            console.log("<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data.id + "'>" + data.id + "</a></td><td>" + moment(data.created_at).format('DD-MM-YYYY') + "</td><td>" + data.subject + "</td><td>" + data.status + "</td></tr>");
             this.$("#agent_pending_reviews").append("<tr class='colored'><td><a href='https://" + v_subdomain + ".zendesk.com/agent/tickets/" + data.id + "'>" + data.id + "</a></td><td>" + data.subject + "</td><td>" + data.status + "</td></tr>");
 
           });
 
-        });*/
-
-        console.log(currentUser.role());
+        });
 
       }
 
-      console.log(this.currentLocation());
     },
 
       /*********************/
@@ -256,6 +270,8 @@
         var b = JSON.parse(this.setting('default_channels'));
         var total_channels = b.settings.channels.length;
         var channels_data = b.settings.channels;
+     
+        this.$("#tickets").empty(); //before show the results clean the table
 
         for(var i = 0; i < total_channels; i++){
 
@@ -265,14 +281,15 @@
           this.when(tickets_by_channel).then(function(data_mail){
 
             var via_mail = data_mail.results;
-            
+                        
             if(data_mail.count > 0){
+
               //If exists, check the checkbox (Channel/Via)
               this.$('#channel_' + via_mail[0].via.channel)[0].checked = true;
               //If exists, create the table with the channel as ID
-              this.$(".th_right").append("<div id='results_by_channel_" + via_mail[0].via.channel + "'><table width='100%' id='tickets_by_channel_" + via_mail[0].via.channel + "'></table></div>");
+              this.$("#tickets").append("<div id='results_by_channel_" + via_mail[0].via.channel + "'><table width='100%' id='tickets_by_channel_" + via_mail[0].via.channel + "'></table></div>");
 
-              this.$("#tickets_by_channel_" + via_mail[0].via.channel).append("<tr><th colspan='4' class='table_result_headers'>" + via_mail[0].via.channel + "</th></tr><tr class='table_result_title'><td>Ticket Id</td><td>Created at</td><td>Subject</td><td>Status</td></tr>");
+              this.$("#tickets_by_channel_" + via_mail[0].via.channel).append("<tr><th colspan='4' class='table_result_headers'>" + via_mail[0].via.channel + "</th></tr><tr class='table_result_title'><td width='10%'>Ticket Id</td><td width='20%'>Created at</td><td width='60%'>Subject</td><td width='10%'>Status</td></tr>");
 
               _.each(via_mail.slice(0,this.setting('tickets_by_channel')), function(data_mail){
 
@@ -286,8 +303,23 @@
 
         }
 
-        this.$(".submit_section_nb").toggle();
+        //get pending review tickets by agent
+        
+        var pending_review = this.ajax('getPendingReviews', event_name.currentTarget.value);
 
+        this.when(pending_review).then(function(data){
+
+          var p_review = data.results;
+
+                 
+          _.each(p_review, function(data){
+
+            this.$("#pe_re_by_agent").append(data.id + "&nbsp;");
+
+          });
+
+        });
+   
       },
 
       showByDate:function(event_name){
@@ -307,7 +339,6 @@
         if(event_name.target.checked){
           this.$("#results_by_" + event_name.target.id).toggle();
         }else{
-          console.log(this.$("#results_by_" + event_name.target.id));
           this.$("#results_by_" + event_name.target.id).css("display","none");
         }
         //console.log(event_name.target.id);
@@ -354,11 +385,11 @@
 
         if(this.$("#toAgent").prop('checked', true)){
 
-          v_tags += '"agent_review"]}';
+          v_tags += '"tl_reviewed","agent_review"]}';
 
         }else{
 
-          v_tags += '"reviewed"]}';
+          v_tags += '"tl_reviewed"]}';
 
         }
 
@@ -369,7 +400,6 @@
 
           this.ajax('removeTags', v_tags, this.ticket().id()).done(function(data){
 
-            console.log(data);
             flag = 0;
 
           });
@@ -400,11 +430,11 @@
 
         if(this.$("#toAgent").prop('checked', true)){
 
-          v_tags += '"agent_review"]}';
+          v_tags += '"tl_reviewed","agent_review"]}';
 
         }else{
 
-          v_tags += '"reviewed"]}';
+          v_tags += '"tl_reviewed"]}';
 
         }
 
