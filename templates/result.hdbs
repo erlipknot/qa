@@ -40,10 +40,17 @@
               <td><b>From</b><br><input type="text" id="datepicker_from" class="dp_filter"><br><b>To</b><br><input type="text" id="datepicker_to" class="dp_filter"><br></td>
             </tr>
       			<tr><td class="table_result_headers">Pending review by agent</td></tr>
-      			<tr id="pe_re_by_agent"></tr>
-      			<tr><td class="table_result_headers">Reviewed by agent</td></tr>
       			
-      			<tr><td>300&nbsp;785&nbsp;210&nbsp;98&nbsp;12</td></tr>	
+            <tr id="pe_re_by_agent">
+              <td class="alert_msg">No pending tickets</td>
+            </tr>
+      			
+            <tr><td class="table_result_headers">Reviewed by agent</td></tr>
+      			
+      			<tr id="re_by_agent">
+              <td class="alert_msg_reviewed">No reviewed tickets</td>
+            </tr>
+
       		</table>
       	</div>	
       </td>

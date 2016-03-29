@@ -120,7 +120,30 @@ td{
   width:100%;
 }
 
+.alert_msg, .alert_msg_reviewed{
+  font-size: 9px;
+  font-style: italic;
+  color: red;
+}
 
+.pe_ti_result, .re_ti_result{
+  margin:5px;
+  color:#d9534f;
+}
+
+.pe_ti_result, .re_ti_result a{
+  color:#d9534f;
+}
+.pe_ti_result, .re_ti_result a:hover{
+  color:#f0b9b8;
+}
+
+.re_ti_result a{
+  color:#5cb85c;
+}
+.re_ti_result a:hover{
+  color:#c6e6c6;
+}
 /********************/
 /* TICKET SIDE_BAR */
 /********************/

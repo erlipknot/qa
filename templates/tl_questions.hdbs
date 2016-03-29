@@ -15,16 +15,16 @@
               </tr>
               <tr>
                 <th>Company / Agent name</th>
-                <td><input type="radio" id="coach_question_1" name="coach_aoc_name" value="qua_aoc_name_yes"></td>
-                <td><input type="radio" id="coach_question_2" name="coach_aoc_name" value="qua_aoc_name_no"></td>
-                <td><input type="radio" id="coach_question_3" name="coach_aoc_name" value="qua_aoc_name_na"></td>
+                <td><input type="radio" id="tl_question_1" name="coach_aoc_name" value="qua_aoc_name_yes"></td>
+                <td><input type="radio" id="tl_question_2" name="coach_aoc_name" value="qua_aoc_name_no"></td>
+                <td><input type="radio" id="tl_question_3" name="coach_aoc_name" value="qua_aoc_name_na"></td>
               </tr>
               <tr>
                 <!-- ORIGINAL <th>Communicated positive tone and maintaining professionalism</th>-->
                 <th>Communicated positive tone</th>
-                <td><input type="radio" id="coach_question_4" name="coach_communication" value="qua_communication_yes"></td>
-                <td><input type="radio" id="coach_question_5" name="coach_communication" value="qua_communication_no"></td>
-                <td><input type="radio" id="coach_question_6" name="coach_communication" value="qua_communication_na"></td>
+                <td><input type="radio" id="tl_question_4" name="coach_communication" value="qua_communication_yes"></td>
+                <td><input type="radio" id="tl_question_5" name="coach_communication" value="qua_communication_no"></td>
+                <td><input type="radio" id="tl_question_6" name="coach_communication" value="qua_communication_na"></td>
               </tr>
           </table>
         </div>
@@ -39,17 +39,17 @@
             <tr>
               <!--<th>Actions taken compromised the customer experience</th>-->
               <th>Actions taken customer experience</th>
-              <td><input type="radio" id="coach_question_7" name="coach_sec" value="qua_sec_yes"></td>
-              <td><input type="radio" id="coach_question_8" name="coach_sec" value="qua_sec_no"></td>
-              <td><input type="radio" id="coach_question_9" name="coach_sec" value="qua_sec_na"></td>
+              <td><input type="radio" id="tl_question_7" name="coach_sec" value="qua_sec_yes"></td>
+              <td><input type="radio" id="tl_question_8" name="coach_sec" value="qua_sec_no"></td>
+              <td><input type="radio" id="tl_question_9" name="coach_sec" value="qua_sec_na"></td>
             </tr>
 
             <tr>
               <!--<th>Actions taken on the account contrary to our procedures</th>-->
               <th>Actions taken contrary procedures</th>
-              <td><input type="radio" id="coach_question_10" name="coach_pro" value="qua_pro_yes"></td>
-              <td><input type="radio" id="coach_question_11" name="coach_pro" value="qua_pro_no"></td>
-              <td><input type="radio" id="coach_question_12" name="coach_pro" value="qua_pro_na"></td>
+              <td><input type="radio" id="tl_question_10" name="coach_pro" value="qua_pro_yes"></td>
+              <td><input type="radio" id="tl_question_11" name="coach_pro" value="qua_pro_no"></td>
+              <td><input type="radio" id="tl_question_12" name="coach_pro" value="qua_pro_na"></td>
             </tr>
           </table>
         </div>
@@ -63,23 +63,23 @@
             </tr>
             <tr>
               <th>Issue was fully addressed</th>
-              <td><input type="radio" id="coach_question_13" name="coach_add" value="qua_add_yes"></td>
-              <td><input type="radio" id="coach_question_14" name="coach_add" value="qua_add_no"></td>
-              <td><input type="radio" id="coach_question_15" name="coach_add" value="qua_add_na"></td>
+              <td><input type="radio" id="tl_question_13" name="coach_add" value="qua_add_yes"></td>
+              <td><input type="radio" id="tl_question_14" name="coach_add" value="qua_add_no"></td>
+              <td><input type="radio" id="tl_question_15" name="coach_add" value="qua_add_na"></td>
             </tr>
 
             <tr>
               <th>Clear and structured response</th>
-              <td><input type="radio" id="coach_question_16" name="coach_str" value="qua_str_yes"></td>
-              <td><input type="radio" id="coach_question_17" name="coach_str" value="qua_str_no"></td>
-              <td><input type="radio" id="coach_question_18" name="coach_str" value="qua_str_na"></td>
+              <td><input type="radio" id="tl_question_16" name="coach_str" value="qua_str_yes"></td>
+              <td><input type="radio" id="tl_question_17" name="coach_str" value="qua_str_no"></td>
+              <td><input type="radio" id="tl_question_18" name="coach_str" value="qua_str_na"></td>
             </tr>
 
             <!--<tr>
               <th>Anticipated future customer needs and additional information was provided</th>
-              <td><input type="radio" id="coach_question_19" name="coach_inf" value="qua_inf_yes"></td>
-              <td><input type="radio" id="coach_question_20" name="coach_inf" value="qua_inf_no"></td>
-              <td><input type="radio" id="coach_question_21" name="coach_inf" value="qua_inf_na"></td>
+              <td><input type="radio" id="tl_question_19" name="coach_inf" value="qua_inf_yes"></td>
+              <td><input type="radio" id="tl_question_20" name="coach_inf" value="qua_inf_no"></td>
+              <td><input type="radio" id="tl_question_21" name="coach_inf" value="qua_inf_na"></td>
             </tr>-->
           </table>
         </div>

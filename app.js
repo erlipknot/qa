@@ -32,6 +32,8 @@
 
       removeTags: function(arr_tag, id){
 
+        console.log('/api/v2/tickets/' + id + '/tags.json and addtag is ' + arr_tag);
+
         return {
 
           url: '/api/v2/tickets/' + id + '/tags.json',
@@ -45,6 +47,8 @@
       },
 
       updateTicketResults: function(arr_tag, id){
+
+        console.log('/api/v2/tickets/' + id + '/tags.json and addtag is ' + arr_tag);
 
         return {
 
@@ -96,6 +100,16 @@
         };
       },
 
+      getReviewedByAgent: function(data){
+
+        //console.log('/api/v2/search.json?query=type:ticket assignee:' + data  + ' tags:agent_review');
+        return{
+          url:'/api/v2/search.json?query=type:ticket assignee:' + data  + ' tags:ag_reviewed',
+          type: 'GET',
+          dataType: 'json'
+        };
+      },      
+
       getTicketsBySatisfaction: function(data, rating){
         return{
           url:'/api/v2/search.json?query=type:ticket assignee:"' + data + '" created>2015-01-01 created<2015-12-31 satisfaction:"' + rating + '"',
@@ -111,7 +125,7 @@
       'app.activated': 'loadData',
 
       //DOM TICKET SIDEBAR
-      'click #save_form':'getValues',
+      'click #save_form':'saveReview',
       'change input:radio':'hideReviewed',
       'click #uncheck_all':'uncheckAll',
       'click #myTab a':'changeTabs',
@@ -152,33 +166,44 @@
 
       if(this.currentLocation() == 'ticket_sidebar'){
 
+        var currentUser = this.currentUser();
+
+        if(currentUser.role() == "admin"){
+
       		this.ajax('reviewedTicket', this.ticket().id()).done(function(data){
 
-          if(data.results.length == 1){
+            if(data.results.length == 1){
 
-            this.ajax('getTags', this.ticket().id()).done(function(data){
+              this.ajax('getTags', this.ticket().id()).done(function(data){
 
-              for(var i = 1; i <= 21; i++){
-                
-                for(var j = 0; j <= data.tags.length; j++){
+                for(var i = 1; i <= 21; i++){
                   
-                  if(this.$("#coach_question_" + i).attr("value") == data.tags[j]){
-
-                    this.$("#coach_question_" + i).prop('checked', true);
+                  for(var j = 0; j <= data.tags.length; j++){
                     
-                  }
-                
-                }  
+                    if(this.$("#tl_question_" + i).attr("value") == data.tags[j]){
 
-              }
+                      this.$("#tl_question_" + i).prop('checked', true);
+                      
+                    }
+                  
+                  }  
 
-            });
+                }
 
-          }
+              });
 
-        });
+            }
+
+          });
+
+          this.switchTo('tl_questions');
         
-        this.switchTo('questions');
+        }else{
+
+          this.switchTo('ag_questions');
+        
+        }
+
 
     	 } else if (this.currentLocation() == 'nav_bar'){
 
@@ -311,12 +336,46 @@
 
           var p_review = data.results;
 
+          this.$("#pe_re_by_agent").html('<td class="alert_msg">No pending tickets</td>');
+
+          if(data.count > 0){
+
+            this.$(".alert_msg").hide();
+            this.$("#pe_re_by_agent").append('<div class="pe_ti_result"></div>');
                  
-          _.each(p_review, function(data){
+            _.each(p_review, function(data){
 
-            this.$("#pe_re_by_agent").append(data.id + "&nbsp;");
+              this.$(".pe_ti_result").append('<a href="https://' + v_subdomain + '.zendesk.com/agent/tickets/' + data.id + '">' + data.id + '</a>&nbsp;');
 
-          });
+            });
+
+          }
+
+        });
+
+
+        //get reviewed tickets by agent
+        
+        var pending_review = this.ajax('getReviewedByAgent', event_name.currentTarget.value);
+
+        this.when(pending_review).then(function(data){
+
+          var p_review = data.results;
+
+          this.$("#re_by_agent").html('<td class="alert_msg_reviewed">No reviewed tickets</td>');
+
+          if(data.count > 0){
+
+            this.$(".alert_msg_reviewed").hide();
+            this.$("#re_by_agent").append('<div class="re_ti_result"></div>');
+                 
+            _.each(p_review, function(data){
+
+              this.$(".re_ti_result").append('<a href="https://' + v_subdomain + '.zendesk.com/agent/tickets/' + data.id + '">' + data.id + '</a>&nbsp;');
+
+            });
+
+          }
 
         });
    
@@ -360,97 +419,125 @@
       /*******TICKET_SIDEBAR*******/
       /*********************/
 
-      getValues:function(){
+      saveReview:function(){
 
         var arr_tag = this.ticket().tags();
         var new_tags = [];
         var flag = 0;
         var v_tags = '{"tags":[';
+        var currentUser = this.currentUser();
+
+        if(currentUser.role() == "admin"){
+
+            //*********************************
+            //CHECK IF THERE IS ANY QUALITY TAG
+            //*********************************
+
+            for(var i = 0; i < arr_tag.length; i++){
+
+              if(arr_tag[i].includes('tl_')){
+
+                v_tags += '"' + arr_tag[i] + '",';
+                flag = 1;
+
+              }
+
+            }
+
+            if(this.$("#toAgent").prop('checked', true)){
+
+              v_tags += '"tl_reviewed","agent_review"]}';
+
+            }else{
+
+              v_tags += '"tl_reviewed"]}';
+
+            }
 
 
-        //*********************************
-        //CHECK IF THERE IS ANY QUALITY TAG
-        //*********************************
+            //IF WE FIND A QUALITY TAG REMOVE IT
 
-        for(var i = 0; i < arr_tag.length; i++){
+            if(flag == 1){
 
-          if(arr_tag[i].includes('qua_')){
+              this.ajax('removeTags', v_tags, this.ticket().id()).done(function(data){
 
-            v_tags += '"' + arr_tag[i] + '",';
-            flag = 1;
+                flag = 0;
 
-          }
+              });
 
-        }
+            }
 
-        if(this.$("#toAgent").prop('checked', true)){
+            //***********************************
+            //END REMOVE QUALITY TAGS
+            //***********************************  
 
-          v_tags += '"tl_reviewed","agent_review"]}';
+
+            //***********************************
+            //ADD QUALITY TAGS SELECTED (IN CASE)
+            //***********************************
+
+            v_tags = '{"tags":[';
+
+            for(var i = 1; i <= 21; i++){
+              
+              if(this.$("#tl_question_" + i).is(":checked")){
+
+                v_tags += '"' + this.$("#tl_question_" + i).attr("value") + '",';
+                flag = 1;
+
+              }
+
+            }
+
+            if(this.$("#toAgent").prop('checked', true)){
+
+              v_tags += '"tl_reviewed","agent_review"]}';
+
+            }else{
+
+              v_tags += '"tl_reviewed"]}';
+
+            }
+
+            if(flag == 1){
+
+              this.ajax('updateTicketResults',v_tags, this.ticket().id());
+
+            }
+
+            //***********************************
+            //END ADD QUALITY TAGS
+            //*********************************** 
 
         }else{
 
-          v_tags += '"tl_reviewed"]}';
+            var v_tags;
+
+            //FIRST WE REMOVE THE TAG agent_review
+            v_tags = '{"tags":["agent_review"]}';
+
+            this.ajax('removeTags', v_tags, this.ticket().id());
+
+            //ONCE REMOVED WE ADD THE REST OF TAGS
+
+            v_tags = '{"tags":[';
+
+            for(var i = 1; i <= 21; i++){
+              
+              if(this.$("#ag_question_" + i).is(":checked")){
+
+                v_tags += '"' + this.$("#ag_question_" + i).attr("value") + '",';
+
+              }
+
+            }
+
+            v_tags += '"ag_reviewed"]}';
+
+            this.ajax('updateTicketResults',v_tags, this.ticket().id());
+            this.$('#submit_ag_section').hide();
 
         }
-
-
-        //IF WE FIND A QUALITY TAG REMOVE IT
-
-        if(flag == 1){
-
-          this.ajax('removeTags', v_tags, this.ticket().id()).done(function(data){
-
-            flag = 0;
-
-          });
-
-        }
-
-        //***********************************
-        //END REMOVE QUALITY TAGS
-        //***********************************  
-
-
-        //***********************************
-        //ADD QUALITY TAGS SELECTED (IN CASE)
-        //***********************************
-
-        var v_tags = '{"tags":[';
-
-        for(var i = 1; i <= 21; i++){
-          
-          if(this.$("#coach_question_" + i).is(":checked")){
-
-            v_tags += '"' + this.$("#coach_question_" + i).attr("value") + '",';
-            flag = 1;
-
-          }
-
-        }
-
-        if(this.$("#toAgent").prop('checked', true)){
-
-          v_tags += '"tl_reviewed","agent_review"]}';
-
-        }else{
-
-          v_tags += '"tl_reviewed"]}';
-
-        }
-
-        if(flag == 1){
-
-          this.ajax('updateTicketResults',v_tags, this.ticket().id()).done(function(data){
-            
-            console.log("Saved!!");
-
-          });
-
-        }
-
-        //***********************************
-        //END ADD QUALITY TAGS
-        //*********************************** 
 
       },
 
@@ -472,9 +559,9 @@
 
         for(var i = 1; i <= 21; i++){
 
-          if(this.$("#coach_question_" + i).is(":checked")){
+          if(this.$("#tl_question_" + i).is(":checked")){
 
-              this.$("#coach_question_" + i).prop( "checked", false );
+              this.$("#tl_question_" + i).prop( "checked", false );
 
           }
           
