@@ -141,76 +141,46 @@
       'change #filter_date':'showDates',
       'change #ticket_via':'applyFilterVia'
     },
+
     displayModal: function(event_name) {
 
-      /*console.log(event_name.currentTarget.id);
+      for(var i = 1; i <= 6; i++){
 
-      var ti_tags = this.ajax('getTags', event_name.currentTarget.id);    
-      
-      this.when(ti_tags).then(function(data){
+        this.$("#" + i + "_tl").empty(); //before show the results clean the table
+        this.$("#" + i + "_ag").empty();
 
-        var t_tags = data.tags;
-        
-        _.each(t_tags, function(data){
-          drop_groups += "<option value='" + data.name + "'>" + data.name + "</option>";
-        });
-        var data = JSON.parse(this.setting('default_channels'));
-        this.switchTo('result',{settings: data.settings});
-        this.$("#d_groups").html(drop_groups + "</select>");
+      }
+  
+      this.ajax('getTags', event_name.currentTarget.id).done(function(data){
+
+        var tl_answer;
+        var ag_answer;
+
+        for(var i = 1; i <= 6; i++){
+
+          tl_answer = i + "_tl";
+          ag_answer = i + "_ag";
+
+          for(var j = 0; j < data.tags.length; j++){
+
+            if(tl_answer == data.tags[j].substring(0,4)){
+
+              this.$("#" + tl_answer).append(data.tags[j].split("_").pop().toUpperCase());
+              
+            }
+
+            if(ag_answer == data.tags[j].substring(0,4)){
+
+              this.$("#" + ag_answer).append(data.tags[j].split("_").pop().toUpperCase());
+              
+            }
+
+          
+          }  
+
+        }
 
       });
-
-
-//I HAVE TO USE THIS TO GET YES, NO OR N/A
-        //console.log(cadena.split("_").pop());
-
-        this.ajax('getTags', this.ticket().id()).done(function(data){
-
-          for(var i = 1; i <= 18; i++){
-            
-            for(var j = 0; j <= data.tags.length; j++){
-              
-              if(this.$("#tl_question_" + i).attr("value") == data.tags[j]){
-
-                this.$("#tl_question_" + i).prop('checked', true);
-                
-              }
-
-              if(this.$("#ag_question_" + i).attr("value") == data.tags[j]){
-
-                this.$("#ag_question_" + i).prop('checked', true);
-                
-              }
-            
-            }  
-
-          }
-
-        });*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       this.$('.my_modal').modal({
 
@@ -230,8 +200,6 @@
       //Activate all the elements
       this.$('#' + e.currentTarget.name).addClass('active');
       this.$('#' + e.currentTarget.name + '_questions').addClass('active');
-
-
 
     },
 
@@ -587,12 +555,11 @@
 
         }else{
 
-            var v_tags;
+          var v_tags;
 
-            //FIRST WE REMOVE THE TAG agent_review
-            v_tags = '{"tags":["agent_review"]}';
+          v_tags = '{"tags":["agent_review"]}';
 
-            this.ajax('removeTags', v_tags, this.ticket().id());
+          this.ajax('removeTags', v_tags, this.ticket().id()).done(function(){
 
             //ONCE REMOVED WE ADD THE REST OF TAGS
 
@@ -612,6 +579,8 @@
 
             this.ajax('updateTicketResults',v_tags, this.ticket().id());
             this.$('#submit_ag_section').hide();
+
+          });
 
         }
 

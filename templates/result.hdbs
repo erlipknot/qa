@@ -6,41 +6,41 @@
   </div>
   <div class="modal-body">
 
-    <table>
-      <tr>
-        <td>Questions</td>
-        <td>Tl</td>
-        <td>Agent</td>
+    <table id="table_modal">
+      <tr class="title_ticket">
+        <td class="title_content">Questions</td>
+        <td class="title_content">T Lead</td>
+        <td class="title_content">Agent</td>
       </tr>
       <tr>
         <td>Company / Agent name</td>
-        <td id="ans_tl_1"></td>
-        <td id="ans_ag_1"></td>
+        <td id="1_tl"></td>
+        <td id="1_ag"></td>
       </tr>
       <tr>
         <td>Communicated positive tone</td>
-        <td id="ans_tl_2"></td>
-        <td id="ans_ag_2"></td>
+        <td id="2_tl"></td>
+        <td id="2_ag"></td>
       </tr>
       <tr>
         <td>Actions taken customer experience</td>
-        <td id="ans_tl_3"></td>
-        <td id="ans_ag_3"></td>
+        <td id="3_tl"></td>
+        <td id="3_ag"></td>
       </tr>
       <tr>
         <td>Actions taken contrary procedures</td>
-        <td id="ans_tl_4"></td>
-        <td id="ans_ag_4"></td>
+        <td id="4_tl"></td>
+        <td id="4_ag"></td>
       </tr>
       <tr>
         <td>Issue was fully addressed</td>
-        <td id="ans_tl_5"></td>
-        <td id="ans_ag_5"></td>
+        <td id="5_tl"></td>
+        <td id="5_ag"></td>
       </tr>
       <tr>
         <td>Clear and structured response</td>
-        <td id="ans_tl_6"></td>
-        <td id="ans_ag_6"></td>
+        <td id="6_tl"></td>
+        <td id="6_ag"></td>
       </tr>
     </table>
 
