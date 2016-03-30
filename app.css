@@ -175,3 +175,7 @@ td{
 .panel_title{
   cursor: pointer; cursor: hand; 
 }
+
+.modal {
+  width: 700px;
+}

@@ -130,11 +130,8 @@
       'click #uncheck_all':'uncheckAll',
       'click #myTab a':'changeTabs',
 
-
-
-
-
-      //DOM NAV_BAR
+'click .toggle_modal': 'displayModal',
+     //DOM NAV_BAR
       'change #groups':'loadAgents',
       'change #agents':'agent_info',
       'focus #datepicker_from':'showCalendar',
@@ -143,6 +140,83 @@
       'click #button_via': 'showChannels',
       'change #filter_date':'showDates',
       'change #ticket_via':'applyFilterVia'
+    },
+    displayModal: function(event_name) {
+
+      /*console.log(event_name.currentTarget.id);
+
+      var ti_tags = this.ajax('getTags', event_name.currentTarget.id);    
+      
+      this.when(ti_tags).then(function(data){
+
+        var t_tags = data.tags;
+        
+        _.each(t_tags, function(data){
+          drop_groups += "<option value='" + data.name + "'>" + data.name + "</option>";
+        });
+        var data = JSON.parse(this.setting('default_channels'));
+        this.switchTo('result',{settings: data.settings});
+        this.$("#d_groups").html(drop_groups + "</select>");
+
+      });
+
+
+//I HAVE TO USE THIS TO GET YES, NO OR N/A
+        //console.log(cadena.split("_").pop());
+
+        this.ajax('getTags', this.ticket().id()).done(function(data){
+
+          for(var i = 1; i <= 18; i++){
+            
+            for(var j = 0; j <= data.tags.length; j++){
+              
+              if(this.$("#tl_question_" + i).attr("value") == data.tags[j]){
+
+                this.$("#tl_question_" + i).prop('checked', true);
+                
+              }
+
+              if(this.$("#ag_question_" + i).attr("value") == data.tags[j]){
+
+                this.$("#ag_question_" + i).prop('checked', true);
+                
+              }
+            
+            }  
+
+          }
+
+        });*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      this.$('.my_modal').modal({
+
+        backdrop: true,
+        keyboard: false
+      });
     },
 
     changeTabs: function(e) {
@@ -164,6 +238,8 @@
 
     loadData: function() {
 
+      
+
       if(this.currentLocation() == 'ticket_sidebar'){
 
         var currentUser = this.currentUser();
@@ -176,7 +252,7 @@
 
               this.ajax('getTags', this.ticket().id()).done(function(data){
 
-                for(var i = 1; i <= 21; i++){
+                for(var i = 1; i <= 18; i++){
                   
                   for(var j = 0; j <= data.tags.length; j++){
                     
@@ -367,11 +443,11 @@
           if(data.count > 0){
 
             this.$(".alert_msg_reviewed").hide();
-            this.$("#re_by_agent").append('<div class="re_ti_result"></div>');
+            this.$("#re_by_agent").append('<div class="modal_button_cell re_ti_result"></div>');
                  
             _.each(p_review, function(data){
 
-              this.$(".re_ti_result").append('<a href="https://' + v_subdomain + '.zendesk.com/agent/tickets/' + data.id + '">' + data.id + '</a>&nbsp;');
+              this.$(".re_ti_result").append('<a class="btn btn-large toggle_modal" id=' + data.id + '>' + data.id + '</a>');
 
             });
 
@@ -478,7 +554,7 @@
 
             v_tags = '{"tags":[';
 
-            for(var i = 1; i <= 21; i++){
+            for(var i = 1; i <= 18; i++){
               
               if(this.$("#tl_question_" + i).is(":checked")){
 
@@ -522,7 +598,7 @@
 
             v_tags = '{"tags":[';
 
-            for(var i = 1; i <= 21; i++){
+            for(var i = 1; i <= 18; i++){
               
               if(this.$("#ag_question_" + i).is(":checked")){
 
@@ -538,6 +614,37 @@
             this.$('#submit_ag_section').hide();
 
         }
+
+      },
+
+      compareReview:function(){
+
+        //I HAVE TO USE THIS TO GET YES, NO OR N/A
+        //console.log(cadena.split("_").pop());
+
+        this.ajax('getTags', this.ticket().id()).done(function(data){
+
+          for(var i = 1; i <= 18; i++){
+            
+            for(var j = 0; j <= data.tags.length; j++){
+              
+              if(this.$("#tl_question_" + i).attr("value") == data.tags[j]){
+
+                this.$("#tl_question_" + i).prop('checked', true);
+                
+              }
+
+              if(this.$("#ag_question_" + i).attr("value") == data.tags[j]){
+
+                this.$("#ag_question_" + i).prop('checked', true);
+                
+              }
+            
+            }  
+
+          }
+
+        });
 
       },
 
@@ -557,7 +664,7 @@
 
         this.$("#reviewed").attr("disabled", false);
 
-        for(var i = 1; i <= 21; i++){
+        for(var i = 1; i <= 18; i++){
 
           if(this.$("#tl_question_" + i).is(":checked")){
 

@@ -1,3 +1,58 @@
+<!-- class name: 'modal hide fade' are compulsory for a modal to work. Thank you Bootstrap 2.3 -->
+<div class="modal hide fade my_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="my_modal_label">{{t "modal_header"}}</h3>
+  </div>
+  <div class="modal-body">
+
+    <table>
+      <tr>
+        <td>Questions</td>
+        <td>Tl</td>
+        <td>Agent</td>
+      </tr>
+      <tr>
+        <td>Company / Agent name</td>
+        <td id="ans_tl_1"></td>
+        <td id="ans_ag_1"></td>
+      </tr>
+      <tr>
+        <td>Communicated positive tone</td>
+        <td id="ans_tl_2"></td>
+        <td id="ans_ag_2"></td>
+      </tr>
+      <tr>
+        <td>Actions taken customer experience</td>
+        <td id="ans_tl_3"></td>
+        <td id="ans_ag_3"></td>
+      </tr>
+      <tr>
+        <td>Actions taken contrary procedures</td>
+        <td id="ans_tl_4"></td>
+        <td id="ans_ag_4"></td>
+      </tr>
+      <tr>
+        <td>Issue was fully addressed</td>
+        <td id="ans_tl_5"></td>
+        <td id="ans_ag_5"></td>
+      </tr>
+      <tr>
+        <td>Clear and structured response</td>
+        <td id="ans_tl_6"></td>
+        <td id="ans_ag_6"></td>
+      </tr>
+    </table>
+
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary save_button" aria-hidden="true">Save</button>
+  </div>
+</div>
+
+
 <div>
   <table>
     <tr class="current_agent">
@@ -50,6 +105,7 @@
       			<tr id="re_by_agent">
               <td class="alert_msg_reviewed">No reviewed tickets</td>
             </tr>
+            
 
       		</table>
       	</div>	
