@@ -46,7 +46,7 @@
 
       },
 
-      updateTicketResults: function(arr_tag, id){
+      updateTicketTags: function(arr_tag, id){
 
         console.log('/api/v2/tickets/' + id + '/tags.json and addtag is ' + arr_tag);
 
@@ -57,6 +57,22 @@
           dataType: 'json',
           contentType: 'application/json; charset=UTF-8',
           data: arr_tag
+
+        };
+
+      },
+
+      updateTicketNotes: function(qa_notes, id){
+
+        var notes = '{"ticket": { "custom_fields": [{"id": 27100725, "value":"' + qa_notes + '"}]}}';
+
+        return {
+
+          url: '/api/v2/tickets/' + id + '.json',
+          type: 'PUT',
+          dataType: 'json',
+          contentType: 'application/json; charset=UTF-8',
+          data: notes
 
         };
 
@@ -130,7 +146,7 @@
       'click #uncheck_all':'uncheckAll',
       'click #myTab a':'changeTabs',
 
-'click .toggle_modal': 'displayModal',
+      'click .toggle_modal': 'displayModal',
      //DOM NAV_BAR
       'change #groups':'loadAgents',
       'change #agents':'agent_info',
@@ -415,7 +431,7 @@
                  
             _.each(p_review, function(data){
 
-              this.$(".re_ti_result").append('<a class="btn btn-large toggle_modal" id=' + data.id + '>' + data.id + '</a>');
+              this.$(".re_ti_result").append('<a class="toggle_modal" id=' + data.id + '>' + data.id + '</a>&nbsp;');
 
             });
 
@@ -465,7 +481,7 @@
 
       saveReview:function(){
 
-        var arr_tag = this.ticket().tags();
+        /*var arr_tag = this.ticket().tags();
         var new_tags = [];
         var flag = 0;
         var v_tags = '{"tags":[';
@@ -545,7 +561,7 @@
 
             if(flag == 1){
 
-              this.ajax('updateTicketResults',v_tags, this.ticket().id());
+              this.ajax('updateTicketTags',v_tags, this.ticket().id());
 
             }
 
@@ -577,11 +593,18 @@
 
             v_tags += '"ag_reviewed"]}';
 
-            this.ajax('updateTicketResults',v_tags, this.ticket().id());
+            this.ajax('updateTicketTags',v_tags, this.ticket().id());
+
+            this.ajax('updateTicketNotes',v_tags, this.ticket().id());
+
             this.$('#submit_ag_section').hide();
 
           });
 
+        }*/
+
+        if(this.$('#qa_notes')[0].value != ''){
+          this.ajax('updateTicketNotes',this.$('#qa_notes')[0].value, this.ticket().id());
         }
 
       },

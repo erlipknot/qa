@@ -131,10 +131,10 @@ td{
   color:#d9534f;
 }
 
-.pe_ti_result, .re_ti_result a{
+.pe_ti_result a{
   color:#d9534f;
 }
-.pe_ti_result, .re_ti_result a:hover{
+.pe_ti_result a:hover{
   color:#f0b9b8;
 }
 
