@@ -64,7 +64,7 @@
 
       updateTicketNotes: function(qa_notes, id){
 
-        var notes = '{"ticket": { "custom_fields": [{"id": 27100725, "value":"' + qa_notes + '"}]}}';
+        var notes = '{"ticket": { "custom_fields": [{"id": 27025349, "value":"' + qa_notes + '"}]}}';
 
         return {
 
@@ -139,6 +139,7 @@
 
     events: {
       'app.activated': 'loadData',
+      'click #close_modal':'cleanModalTable',
 
       //DOM TICKET SIDEBAR
       'click #save_form':'saveReview',
@@ -171,6 +172,7 @@
 
         var tl_answer;
         var ag_answer;
+        var compatibility = 0;
 
         for(var i = 1; i <= 6; i++){
 
@@ -194,6 +196,23 @@
           
           }  
 
+        }
+
+       for(var i = 1; i <= 6; i++){
+
+          tl_answer = i + "_tl";
+          ag_answer = i + "_ag";
+
+        if(this.$('#' + tl_answer)[0].innerHTML == this.$('#' + ag_answer)[0].innerHTML){
+          compatibility++;
+        }
+
+       }
+
+        if(compatibility > 0){
+          this.$('#compatibility').append(((compatibility * 100)/6).toFixed(0) + " %");
+        }else{
+          this.$('#compatibility').append("0 %");
         }
 
       });
@@ -234,6 +253,8 @@
 
             if(data.results.length == 1){
 
+              this.$('#qa_notes').append(data.results[0].custom_fields[2].value);
+
               this.ajax('getTags', this.ticket().id()).done(function(data){
 
                 for(var i = 1; i <= 18; i++){
@@ -259,6 +280,34 @@
           this.switchTo('tl_questions');
         
         }else{
+
+          this.ajax('reviewedTicket', this.ticket().id()).done(function(data){
+
+            if(data.results.length == 1){
+
+              this.$('#qa_notes').append(data.results[0].custom_fields[2].value);
+
+              this.ajax('getTags', this.ticket().id()).done(function(data){
+
+                for(var i = 1; i <= 18; i++){
+                  
+                  for(var j = 0; j <= data.tags.length; j++){
+                    
+                    if(this.$("#ag_question_" + i).attr("value") == data.tags[j]){
+
+                      this.$("#ag_question_" + i).prop('checked', true);
+                      
+                    }
+                  
+                  }  
+
+                }
+
+              });
+
+            }
+
+          });
 
           this.switchTo('ag_questions');
         
@@ -356,12 +405,14 @@
         var total_channels = b.settings.channels.length;
         var channels_data = b.settings.channels;
      
+        console.log(total_channels);
+
         this.$("#tickets").empty(); //before show the results clean the table
 
         for(var i = 0; i < total_channels; i++){
 
           var current_channel = channels_data[i];
-          var tickets_by_channel = this.ajax('getTicketsByChannel',event_name.currentTarget.value, current_channel,"created>" + moment().subtract(90, 'days').format("YYYY-MM-DD") + " created<" + moment().format("YYYY-MM-DD"));
+          var tickets_by_channel = this.ajax('getTicketsByChannel',event_name.currentTarget.value, current_channel,"created>" + moment().subtract(90, 'days').format("YYYY-MM-DD") + " created<=" + moment().format("YYYY-MM-DD"));
 
           this.when(tickets_by_channel).then(function(data_mail){
 
@@ -481,7 +532,7 @@
 
       saveReview:function(){
 
-        /*var arr_tag = this.ticket().tags();
+        var arr_tag = this.ticket().tags();
         var new_tags = [];
         var flag = 0;
         var v_tags = '{"tags":[';
@@ -569,6 +620,8 @@
             //END ADD QUALITY TAGS
             //*********************************** 
 
+            this.ajax('updateTicketNotes',this.$('#qa_notes')[0].value, this.ticket().id());
+
         }else{
 
           var v_tags;
@@ -595,16 +648,12 @@
 
             this.ajax('updateTicketTags',v_tags, this.ticket().id());
 
-            this.ajax('updateTicketNotes',v_tags, this.ticket().id());
+            //this.ajax('updateTicketNotes',v_tags, this.ticket().id());
 
             this.$('#submit_ag_section').hide();
 
           });
 
-        }*/
-
-        if(this.$('#qa_notes')[0].value != ''){
-          this.ajax('updateTicketNotes',this.$('#qa_notes')[0].value, this.ticket().id());
         }
 
       },
@@ -665,6 +714,12 @@
           }
           
         }
+
+      },
+
+      cleanModalTable:function(){
+
+        this.$('#compatibility').html("");
 
       }
   };

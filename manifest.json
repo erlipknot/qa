@@ -16,7 +16,7 @@
       "name": "default_channels",
       "type": "text",
       "required": false,
-      "default": "{\"settings\":{\"channels\":[\"mail\",\"chat\",\"voice\",\"api\"]}}"
+      "default": "{\"settings\":{\"channels\":[\"mail\",\"chat\",\"phone_call_inbound\",\"api\"]}}"
     },
     {
       "name": "tickets_by_channel",
@@ -27,3 +27,5 @@
   ]
 
 }
+
+//https://support.zendesk.com/hc/en-us/articles/203663226#topic_crj_yev_uc
